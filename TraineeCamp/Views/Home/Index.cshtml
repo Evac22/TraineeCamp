@@ -1,0 +1,26 @@
+﻿@model TraineeCamp.Models.FileEmailModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>Upload file</h1>
+
+<form asp-controller="Home" asp-action="UploadFile" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="UploadedFile"></label>
+        <input asp-for="UploadedFile" type="file" accept=".docx" class="form-control">
+        <span asp-validation-for="UploadedFile" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" type="email" class="form-control">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary mt-2">Upload</button>
+</form>
+
+@section scripts{
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
