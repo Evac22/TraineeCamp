@@ -32,13 +32,13 @@ namespace TraineeCamp.Controllers
         {
             string connectionString = _blobConnectionString;
 
-            if (model.UploadedFile != null && model.UploadedFile.Length > 0)
+            if (model.UploadedFile?.Length > 0)
             {
                 CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
                 CloudBlobClient blobClient = storageAccount.CreateCloudBlobClient();
 
                 CloudBlobContainer container = blobClient.GetContainerReference(_blobContainerName);
-                container.CreateIfNotExistsAsync();
+                await container.CreateIfNotExistsAsync();
 
                 CloudBlockBlob blob = container.GetBlockBlobReference(Path.GetFileName(model.UploadedFile.FileName));
                 await using (var fileStream = model.UploadedFile.OpenReadStream())
@@ -50,6 +50,7 @@ namespace TraineeCamp.Controllers
 
             return RedirectToAction("Index");
         }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

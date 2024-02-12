@@ -19,7 +19,7 @@ namespace TraineeCamp.Controller
         {
             if (file.UploadedFile.FileName.EndsWith(".docx") && file.UploadedFile.Length > 0)
             {
-                await _fileStorageService.SaveFile(file);
+                await _fileStorageService.SaveFileAsync(file);
                 return Ok("success");
             }
             else
@@ -32,18 +32,16 @@ namespace TraineeCamp.Controller
         [Route("get")]
         public async Task<IActionResult> Get(string fileName)
         {
-            var docxFileStream = await _fileStorageService.GetFileStream(fileName);
-            string fileType = "docx";
-            return File(docxFileStream, $"application/{fileType}");
+            var docxFileStream = await _fileStorageService.GetFileStreamAsync(fileName);
+            return File(docxFileStream, ContentTypes.Application.Docx, $"{fileName}.docx");
         }
 
         [HttpGet]
         [Route("download")]
         public async Task<IActionResult> Download(string fileName)
         {
-            var docxFileStream = await _fileStorageService.GetFileStream(fileName);
-            string fileType = "docx";
-            return File(docxFileStream, $"application/{fileType}", $"{fileName}.{fileType}");
+            var docxFileStream = await _fileStorageService.GetFileStreamAsync(fileName);
+            return File(docxFileStream, ContentTypes.Application.Docx, $"{fileName}.docx");
         }
 
     }

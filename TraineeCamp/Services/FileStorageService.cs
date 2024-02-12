@@ -12,7 +12,7 @@ namespace TraineeCamp.Services
             _blobServiceClient = blobServiceClient;
         }
 
-        public async Task SaveFile(FileEmailModel file)
+        public async Task SaveFileAsync(FileEmailModel file)
         {
             var blobContainer = _blobServiceClient.GetBlobContainerClient("myProjectContainer");
             var blob = blobContainer.GetBlobClient(file.UploadedFile.FileName);
@@ -23,10 +23,10 @@ namespace TraineeCamp.Services
             };
 
             await blob.UploadAsync(file.UploadedFile.OpenReadStream());
-            blob.SetMetadataAsync(data);
+            await blob.SetMetadataAsync(data);
         }
 
-        public async Task<Stream> GetFileStream(string fileName)
+        public async Task<Stream> GetFileStreamAsync(string fileName)
         {
             var blobContainer = _blobServiceClient.GetBlobContainerClient("myProjectContainer");
             var blob = blobContainer.GetBlobClient(fileName);

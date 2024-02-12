@@ -4,8 +4,8 @@ namespace TraineeCamp.Services
 {
     public interface IFileStorageService
     {
-        Task SaveFile(FileEmailModel file);
+        Task SaveFileAsync(FileEmailModel file);
 
-        Task<Stream> GetFileStream(string fileName);
+        Task<Stream> GetFileStreamAsync(string fileName);
     }
 }
